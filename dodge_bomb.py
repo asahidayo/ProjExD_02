@@ -27,6 +27,9 @@ def check_bound(obj_rct: pg.Rect):
     return yoko, tate
 
 
+
+
+
 def main():
     pg.display.set_caption("逃げろ！こうかとん")
     screen = pg.display.set_mode((WIDTH, HEIGHT))
@@ -37,7 +40,7 @@ def main():
     kk_img = pg.transform.rotozoom(kk_img, 0, 2.0)
     kk_rct = kk_img.get_rect()
     kk_rct.center = (900, 400)  # 練習３：こうかとんの初期座標を設定する
-
+    """それぞれの方向の鳥"""
     ue_tori=pg.transform.rotozoom(kk_img, 270, 1.0)
     hidariue_tori=pg.transform.rotozoom(kk_img, -45, 1.0)
     hidari_tori=kk_img
@@ -85,7 +88,8 @@ def main():
                 sum_mv[0] += mv[0]  # 練習３：横方向の合計移動量
                 sum_mv[1] += mv[1]  # 練習３：縦方向の合計移動量
         kk_rct.move_ip(sum_mv[0], sum_mv[1])  # 練習３：移動させる
-        if sum_mv[0]== 0 and sum_mv[1]== -5:
+        """それぞれのボタンを押したときにそれぞれの鳥を表示する"""
+        if sum_mv[0]== 0 and sum_mv[1]== -5: 
             kk_img=tori[0]
         if sum_mv[0]== -5 and sum_mv[1]== -5:
             kk_img=tori[1]
@@ -103,11 +107,11 @@ def main():
         if sum_mv[0]== +5 and sum_mv[1]== 0:
              kk_img=tori[6]
 
-        if sum_mv[0]== +5 and sum_mv[1]== -5:
+        elif sum_mv[0]== +5 and sum_mv[1]== -5:
              kk_img=tori[7]
-
+        #print(check_bound(kk_rct))
         if check_bound(kk_rct) !=(True,True):
-            kk_rct.move_ip(-sum_mv[0],sum_mv[1])
+            kk_rct.move_ip(-sum_mv[0],-sum_mv[1])
         screen.blit(kk_img, kk_rct)  # 練習３：移動後の座標に表示させる
         """"ばくだん"""
         bd_rct.move_ip(vx, vy)  # 練習２：爆弾を移動させる
@@ -116,6 +120,7 @@ def main():
             vx*= -1
         if not tate:
             vy*= -1
+       
         screen.blit(bd_img, bd_rct)  # 練習１：Rectを使って試しにblit
         
         pg.display.update()
